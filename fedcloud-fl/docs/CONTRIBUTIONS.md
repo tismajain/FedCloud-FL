@@ -9,3 +9,5 @@ Our additions are the validation-only decision-threshold selection module, dedup
 The new publishable branch is a clean snapshot because upstream Git history contains dataset archives. Original history is retained locally and remains accessible at the upstream URL. No dataset archives or environment files are redistributed. Existing upstream results are clearly distinguished from new measured results under `results/minor_calibration_20261121/`.
 
 The continuation added wrapper input validation, an upstream WAN-emulation option, and a documented audit of the original study artifacts. Independent socket verification remains pending. [Experiments](EXPERIMENTS.md)
+
+The ranking verifier independently recomputes average precision and ROC AUC from the study's test predictions and checks the recorded values for both threshold settings. [Experiments](EXPERIMENTS.md)

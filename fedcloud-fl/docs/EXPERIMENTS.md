@@ -18,6 +18,15 @@ AUPRC and ROC-AUC were identical across paired thresholds in every run. At FedAv
 
 The saved comparison plot shows means and sample standard deviations over model seeds. The seed-0 precision–recall plot marks both operating points on each model's curve, and the confusion matrices show the corresponding counts. The communication plot uses validation AUPRC during training and mean test F1 at round 30. All four figures were visually inspected. The CSV and JSON audit checked five source hashes, every paired row against its confusion totals and payload arithmetic, all six summary groups against per-run measurements, and nine histories with 30 rounds and 150 client diagnostic rows per run. The excluded prediction archives are required to independently recompute the curves and ranking metrics. [Comparison](../results/minor_calibration_20261121/comparison.png) · [Precision–recall](../results/minor_calibration_20261121/precision_recall.png) · [Confusion matrices](../results/minor_calibration_20261121/confusion_matrices.png) · [Communication](../results/minor_calibration_20261121/performance_communication.png)
 
+Regenerate the study predictions in a fresh output directory and run the ranking verifier against that directory:
+
+```sh
+python scripts/run_threshold_study.py --rounds 30 --seeds 0 1 2 --include-fedprox --output results/minor_regenerated
+python scripts/verify_study_rankings.py results/minor_regenerated
+```
+
+The verifier uses NumPy to recompute average precision from the precision–recall steps and ROC AUC from concordant positive–negative pairs, with half credit for tied scores. It checks both threshold rows in each run against the same prediction archive and exits with status 1 on a mismatch or missing file. This checks the CSV and predictions from the regenerated run. Verification of the original CSV requires its original prediction archives.
+
 ## Socket reproduction
 
 The original WAN-emulated FedAvg alpha 0.1 runs reported mean AUPRC 0.07566 and F1 0 across three seeds. They used the upstream split and a more concentrated fraud partition. A direct comparison with the controlled-study means would confound the threshold experiment with those protocol changes. Independent socket measurements are pending dataset and dependency access. [Upstream-reported snapshot](../results/minor_calibration_20261121/upstream_reported_summary.csv)

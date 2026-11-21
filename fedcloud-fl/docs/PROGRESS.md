@@ -65,12 +65,18 @@ Upstream **reported**, not yet independently reproduced: original `results/summa
 - Bundled Python 3.12 runs locally. A fresh venv was created, but pip could not resolve pytest from PyPI. The bundled interpreter could not import either test module because scikit-learn is absent. The dependency lock and full rerun remain open.
 - Wrapper checks passed for missing partition files and mocked sync/async child invocation with WAN emulation enabled and disabled. The raw dataset download endpoint failed to connect and the original partition files are absent. No real socket baseline metrics were produced.
 
+## Ranking verification checkpoint
+
+- Added `scripts/verify_study_rankings.py` to recompute average precision and ROC AUC from local prediction archives using independent NumPy calculations. It checks the two threshold rows per run, including test population counts.
+- Verified all binary label combinations containing both classes and three discrete score levels for arrays of length 2 through 5 against direct metric definitions. CLI checks passed for an intact synthetic archive, an altered CSV metric, and a missing archive. Real prediction verification remains pending.
+- Confirmed the checkout is on the requested branch. GitHub fetch and push failed to connect over HTTPS, and the live remote SHA remains unverified. PyPI and the raw GitHub host were also unreachable. The isolated Windows environment contains only pip and cannot run pytest. The raw dataset and alpha 0.1 partition arrays are absent, so this checkpoint produced no socket measurements, regenerated study predictions, or dependency lock.
+
 ## Remaining tasks
 
 1. Verify private GitHub checkpoint push and record URL/commit in handoff.
 2. Isolate dependencies, rerun all tests without the Flower skip, save a requirements lock.
 3. Reproduce original FedAvg alpha .1 through the socket wrapper with isolated logs; optionally smoke-test upstream async and centralized paths.
-4. Add exact baseline reproduction results and verify ranking metrics against regenerated predictions when available.
+4. Add exact baseline reproduction results and run the ranking verifier against regenerated predictions. If the original prediction archives are recovered, run it against the original study as well.
 5. Incorporate socket results into the experiment record and report once measured.
 6. Update this document, commit and push the next milestone. Verify clean status and remote SHA.
 7. Before academic submission: independent partition seeds/time splits, uncertainty estimates, operational costs, broader literature review and supervisor/institution formatting review. Thresholding alone does not solve primary-metric ranking degradation.
@@ -86,6 +92,7 @@ python -m pip install --index-url https://pypi.org/simple -r requirements.txt py
 OPENBLAS_NUM_THREADS=1 python -m pytest tests -q
 python scripts/prepare_data.py --scheme dir0.1 --out data/minor_original_dir0.1
 OPENBLAS_NUM_THREADS=1 python scripts/run_threshold_study.py --rounds 30 --seeds 0 1 2 --include-fedprox --output results/minor_resumed
+python scripts/verify_study_rankings.py results/minor_resumed
 python scripts/reproduce_socket_baseline.py --parts data/minor_original_dir0.1 --rounds 30 --seed 0 --emulate-wan --output results/minor_socket_resumed
 ```
 
