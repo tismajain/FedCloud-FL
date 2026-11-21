@@ -1,3 +1,13 @@
+# FedCloud-FL — Federated Fraud Detection Under Non-IID Data
+
+**Start here for the complete project story:** [Complete Project Narrative and Technical Report Source](docs/COMPLETE_PROJECT_NARRATIVE.md).
+
+The narrative covers the problem statement, literature, system architecture, dataset and preprocessing, federated algorithms, mathematical methodology, controlled nine-run study, recorded results, interpretation, tests, limitations and references. It is designed as the factual source for the institute's fixed report template, not a replacement for its formatting.
+
+**Verification:** The Windows Python 3.12 local test suite passed 13 tests with no failures or skips on 21 November 2026. The archived full real-data experiment has not yet been independently reproduced from its excluded prediction archives.
+
+---
+
 # FedCloud-FL: federated fraud detection across cloud nodes
 
 This repository holds the code for the ICT-4441 Cloud Computing mini project, *Federated Learning Across Cloud Nodes:
