@@ -1,5 +1,7 @@
 # Presentation outline
 
+The [nine-slide study deck](THRESHOLD_STUDY.pptx) expands this outline for an academic presentation. Use the [demonstration guide](DEMONSTRATION.md) for the walkthrough and reproduction commands.
+
 1. **Problem.** Explain severe fraud imbalance and uneven fraud counts across five simulated clients. Introduce average precision and the alerting threshold.
 2. **Controlled design.** Show deduplication, training-only scaling, the fixed split and the validation-to-test decision flow. Identify the FedAvg and FedProx conditions.
 3. **Main result.** Use the [comparison plot](../results/minor_calibration_20261121/comparison.png) to show fixed versus tuned F1, recall and AUPRC across three model seeds on the same split.

@@ -30,7 +30,9 @@ The minor project adds a paired study of validation-selected decision thresholds
 |---|---|
 | [Demonstration](docs/DEMONSTRATION.md) | Offline walkthrough, clean setup and full nine-run reproduction |
 | [Report](docs/MINOR_PROJECT_REPORT.md) | Methodology, literature, saved results and limitations |
+| [Presentation](docs/THRESHOLD_STUDY.pptx) | Nine slides on the paired threshold experiment |
 | [Experiment record](docs/EXPERIMENTS.md) | Study artifacts and upstream socket reproduction protocol |
+| [Project diary](docs/PROJECT_DIARY.md) | Checkpoints from Git and saved experiment artifacts |
 | [Progress](docs/PROGRESS.md) | Verification status and remaining work |
 | [Contributions](docs/CONTRIBUTIONS.md) | Attribution for upstream code and project additions |
 

@@ -83,6 +83,8 @@ Upstream **reported**, not yet independently reproduced: original `results/summa
 - Expanded the minor-project report with the literature, mathematical protocol, saved results, limitations, and upstream attribution. Added a guided offline demonstration, a full reproduction command with the recorded settings, and a diary tied to Git and saved experiment artifacts.
 - The published dataset mirror failed to connect, and neither `data/creditcard.csv` nor the alpha 0.1 partition arrays are present. No controlled-study rerun, regenerated ranking comparison, or networked baseline measurement was possible.
 - The clean-environment milestone was committed as `3122b9a`. Its push failed to connect to GitHub over HTTPS.
+- The documentation milestone was committed as `f8d8ece`. Its push also failed over HTTPS.
+- Created and visually checked all nine slides in [THRESHOLD_STUDY.pptx](THRESHOLD_STUDY.pptx). Package integrity and layout validation passed. The deck presents archived controlled-study results and credits the upstream implementation.
 
 ## Remaining tasks
 
