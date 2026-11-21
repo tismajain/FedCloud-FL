@@ -24,9 +24,20 @@ def main():
     p.add_argument("--timeout", type=float, default=300)
     p.add_argument("--mode", choices=["sync", "async"], default="sync")
     p.add_argument("--strategy", choices=["fedavg", "fedprox"], default="fedavg")
+    p.add_argument("--emulate-wan", action="store_true",
+                   help="Use the upstream per-client WAN profiles instead of loopback timing")
     a = p.parse_args()
+    if a.clients < 1 or a.rounds < 1:
+        p.error("--clients and --rounds must be positive")
     out, parts = a.output.resolve(), a.parts.resolve()
+    required_parts = [parts / "server_test.npz"] + [
+        parts / f"client_{cid}.npz" for cid in range(a.clients)
+    ]
+    missing = [str(path) for path in required_parts if not path.is_file()]
+    if missing:
+        p.error("missing partition files: " + ", ".join(missing))
     out.mkdir(parents=True, exist_ok=False)
+    emulation = [] if a.emulate_wan else ["--no-emu"]
     env = dict(os.environ, OPENBLAS_NUM_THREADS="1", OMP_NUM_THREADS="1", PYTHONUNBUFFERED="1",
                FLWR_TELEMETRY_ENABLED="0")
     common = ["--rounds", str(a.rounds), "--clients", str(a.clients), "--seed", str(a.seed),
@@ -36,11 +47,11 @@ def main():
         server = [py, "-m", "fedcloud.sync_server", "--address", f"127.0.0.1:{a.port}",
                   "--strategy", a.strategy] + common
         client = lambda cid: [py, "-m", "fedcloud.sync_client", "--server", f"127.0.0.1:{a.port}",
-                              "--cid", str(cid), "--data", str(parts / f"client_{cid}.npz"), "--no-emu"]
+                              "--cid", str(cid), "--data", str(parts / f"client_{cid}.npz")] + emulation
     else:
         server = [py, "-m", "fedcloud.async_server", "--host", "127.0.0.1", "--port", str(a.port)] + common
         client = lambda cid: [py, "-m", "fedcloud.async_client", "--server", f"http://127.0.0.1:{a.port}",
-                              "--cid", str(cid), "--data", str(parts / f"client_{cid}.npz"), "--no-emu"]
+                              "--cid", str(cid), "--data", str(parts / f"client_{cid}.npz")] + emulation
     processes, handles = [], []
     start = time.monotonic()
     try:

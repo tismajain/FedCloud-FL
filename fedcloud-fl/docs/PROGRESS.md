@@ -4,11 +4,11 @@ Checkpoint date: 2026-11-21. This is a working experimental prototype, **not a c
 
 ## Location and Git policy
 
-- Local Git root: `/mnt/c/Users/Tisma Jain/cc`; application: `cc/fedcloud-fl`.
+- Current checkout root is `C:/Users/user/Downloads/minor/FedCloud-FL`. Run project commands in the `fedcloud-fl` subdirectory.
 - Working branch: `feature/non-iid-fraud-improvements`.
 - Intended private destination: `https://github.com/tismajain/FedCloud-FL`.
 - Original source: `https://github.com/deepankitasaha/cc`, revision `3ba5dd0c0950e665f2bf6ac88d57e4c0c547fe2e`.
-- Upstream history contains transaction dataset archives. The publishable branch is a clean source snapshot, with original history retained on the local `local/prepublish-history` branch and the original remote retained as `upstream`. Do not push that historical branch.
+- Upstream history contains transaction dataset archives. The publishable branch is a clean source snapshot, with original history retained in the prior workspace. The historical branch and upstream remote are absent from this checkout. Do not push archived history.
 - Raw/partition data, NPZ predictions/models/split IDs, virtual environments, and credentials are excluded. Reproduction regenerates these locally. Small measured CSV/JSON results and PNG figures are saved to Git.
 - Commit and push each completed milestone; never force-push.
 
@@ -18,7 +18,7 @@ Checkpoint date: 2026-11-21. This is a working experimental prototype, **not a c
 - `fedcloud/study_data.py`: remove feature-identical duplicates, reject conflicting duplicate labels, fixed stratified 60/20/20 split, training-only scaling after log Amount transformation, auditable split IDs and dataset hash.
 - `scripts/run_threshold_study.py`: deterministic sequential FedAvg/FedProx simulation reusing upstream `train_local`, shared final checkpoint for fixed and calibrated thresholds, validation-only training monitoring, isolated result directories, payload accounting and client diagnostics.
 - `scripts/plot_threshold_study.py`: comparison, precision-recall, confusion matrix and communication-performance plots from measured files.
-- `scripts/reproduce_socket_baseline.py`: wrapper for unchanged upstream socket processes, isolated logs and bounded runtime. Added but not yet exercised at this checkpoint.
+- `scripts/reproduce_socket_baseline.py`: wrapper for unchanged upstream socket processes, isolated logs and bounded runtime. Now checks required partition files before creating outputs and can use the upstream WAN profiles via `--emulate-wan`.
 - `tests/test_calibration.py`: eight new tests covering thresholds, ties, invalid inputs, leakage boundaries, preprocessing, deterministic training, communication arithmetic, and Flower aggregation parity.
 - Root `.gitignore`: exclude datasets, large binary artifacts, secrets, environments.
 - Original FedAvg, FedProx, FedAsync, centralized code and upstream results are unchanged.
@@ -57,13 +57,21 @@ Upstream **reported**, not yet independently reproduced: original `results/summa
 - No full upstream socket reproduction has completed yet. The new study is explicitly an in-process federated simulation.
 - No customer IDs or chronological holdout; deduplication does not establish customer-level independence. PCA features were supplied precomputed. No formal privacy guarantee, secure aggregation or differential privacy.
 
+## Windows continuation
+
+- Checked the branch and its cached origin ref at checkpoint `2d3794f0436c320acc310b5061b25ca6c3b50dd6`. Live GitHub verification at the intended origin failed to connect on port 443. The push of this milestone to the same branch also failed to connect on port 443. Repository visibility and the live remote SHA remain unverified.
+- Visually reviewed all four saved figures and checked the archived result arithmetic, run histories, per-client row totals and source hashes (with checkout line endings normalized). The saved archives contain nine runs and 18 paired test rows. The prediction archives are excluded, so independent recomputation of the ranking metrics remains open.
+- Added the experiment record, project report, presentation outline and diary template. See [experiments](EXPERIMENTS.md) for reproduction commands and the audit scope.
+- Bundled Python 3.12 runs locally. A fresh venv was created, but pip could not resolve pytest from PyPI. The bundled interpreter could not import either test module because scikit-learn is absent. The dependency lock and full rerun remain open.
+- Wrapper checks passed for missing partition files and mocked sync/async child invocation with WAN emulation enabled and disabled. The raw dataset download endpoint failed to connect and the original partition files are absent. No real socket baseline metrics were produced.
+
 ## Remaining tasks
 
 1. Verify private GitHub checkpoint push and record URL/commit in handoff.
 2. Isolate dependencies, rerun all tests without the Flower skip, save a requirements lock.
 3. Reproduce original FedAvg alpha .1 through the socket wrapper with isolated logs; optionally smoke-test upstream async and centralized paths.
-4. Inspect all four plots and audit artifacts; add exact baseline reproduction results.
-5. Finish `MINOR_PROJECT_REPORT.md`, `EXPERIMENTS.md`, `CONTRIBUTIONS.md`, `PRESENTATION_OUTLINE.md`, and `PROJECT_DIARY_TEMPLATE.md` with verified references and limitations.
+4. Add exact baseline reproduction results and verify ranking metrics against regenerated predictions when available.
+5. Incorporate socket results into the experiment record and report once measured.
 6. Update this document, commit and push the next milestone. Verify clean status and remote SHA.
 7. Before academic submission: independent partition seeds/time splits, uncertainty estimates, operational costs, broader literature review and supervisor/institution formatting review. Thresholding alone does not solve primary-metric ranking degradation.
 
@@ -78,7 +86,7 @@ python -m pip install --index-url https://pypi.org/simple -r requirements.txt py
 OPENBLAS_NUM_THREADS=1 python -m pytest tests -q
 python scripts/prepare_data.py --scheme dir0.1 --out data/minor_original_dir0.1
 OPENBLAS_NUM_THREADS=1 python scripts/run_threshold_study.py --rounds 30 --seeds 0 1 2 --include-fedprox --output results/minor_resumed
-python scripts/reproduce_socket_baseline.py --parts data/minor_original_dir0.1 --rounds 30 --seed 0 --output results/minor_socket_resumed
+python scripts/reproduce_socket_baseline.py --parts data/minor_original_dir0.1 --rounds 30 --seed 0 --emulate-wan --output results/minor_socket_resumed
 ```
 
-Use a fresh output directory each run; the new runners refuse to overwrite one. On this machine the current interpreter is `/tmp/fedcloud-venv/bin/python`. Read this progress file before rerunning completed experiments. Binary prediction archives needed to regenerate PR plots exist locally but are intentionally not pushed; rerunning the study regenerates them.
+Use a fresh output directory each run; the new runners refuse to overwrite one. The previous WSL interpreter path was `/tmp/fedcloud-venv/bin/python`. Use the isolated environment for the current machine. Read this progress file before rerunning completed experiments. Binary prediction archives needed to regenerate PR plots exist locally but are intentionally not pushed; rerunning the study regenerates them.
