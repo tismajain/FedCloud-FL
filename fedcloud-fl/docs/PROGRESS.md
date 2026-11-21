@@ -86,6 +86,14 @@ Upstream **reported**, not yet independently reproduced: original `results/summa
 - The documentation milestone was committed as `f8d8ece`. Its push also failed over HTTPS.
 - Created and visually checked all nine slides in [THRESHOLD_STUDY.pptx](THRESHOLD_STUDY.pptx). Package integrity and layout validation passed. The deck presents archived controlled-study results and credits the upstream implementation.
 
+## Technical demo checkpoint
+
+- Added `python scripts/run_threshold_demo.py`. It generates a deterministic temporary CSV by default or accepts `--csv data/creditcard.csv`. It invokes the existing study for three rounds with five clients, alpha 0.5 and model seed 0, then runs the ranking verifier. Default outputs use a fresh directory under `results/logs/`.
+- Verified that the demo CSV is byte-repeatable on the current Python and has 2,000 rows, 100 positive labels and all 30 expected features. Rechecked all five archived source hashes with line endings normalized, all 18 result rows against their confusion counts and payload arithmetic, all nine 30-round histories, and all six reported means and sample standard deviations. The two threshold rows for each model have identical ranking metrics. The original scores remain unavailable for independent recomputation.
+- The isolated Windows install again exited 1 because PyPI was unreachable. Pytest exited 1 before collection (`No module named pytest`). The demo reached the study process but exited 1 importing NumPy in that environment. Real-data mode reported the missing CSV before training. WSL did not expose a usable installed distribution. These are environment and data blockers. No failure was observed in training or evaluation because neither stage ran.
+- With the existing bundled NumPy runtime, a standalone check passed local training, inference, deterministic repetition and the 17,156-byte serialization round trip. Mocked child-process checks passed for the demo's command arguments, exit status propagation and temporary CSV cleanup. These checks cover individual components. The full study, threshold evaluation and plot generation still need the project dependencies.
+- The cached remote ref had advanced to `8ee07df` when this session began. Live GitHub fetch still failed over HTTPS.
+
 ## Remaining tasks
 
 1. Verify private GitHub checkpoint push and record URL/commit in handoff.

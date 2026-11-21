@@ -26,6 +26,21 @@ up and down per round, rounds-to-target, MB-to-target, async staleness and per-c
 ## Non-IID threshold study
 The minor project adds a paired study of validation-selected decision thresholds under non-IID label skew. The study runs five clients sequentially in one Python process and evaluates each final model at two thresholds on the same held-out scores. Under alpha 0.1, saved mean FedAvg F1 rose from 0.452 to 0.693, with average precision constant at 0.649.
 
+### Quick pipeline demo
+
+Use an isolated Python environment. Install the dependencies once, then run the demo from `fedcloud-fl`:
+
+```sh
+python -m pip install -r requirements.txt pytest
+python -m pip check
+python -m pytest tests -q -rs
+python scripts/run_threshold_demo.py
+```
+
+The demo creates a deterministic 2,000-row sample and runs five clients through three FedAvg rounds with Dirichlet alpha 0.5. It selects a threshold on validation data, evaluates both thresholds on the same test scores, and verifies the ranking metrics against the saved predictions. The terminal prints the output directory. Open `comparison.png` for the two test operating points and `partitions_dir0.5.json` for the client row and fraud counts. Sample-based metrics describe this pipeline check.
+
+To use the published ULB data, place the extracted CSV at `data/creditcard.csv` and run `python scripts/run_threshold_demo.py --csv data/creditcard.csv`. Both demo modes write to a fresh directory under `results/logs/` by default. For the recorded nine-run experiment, follow [the experiment protocol](docs/EXPERIMENTS.md).
+
 | Minor-project resource | Content |
 |---|---|
 | [Demonstration](docs/DEMONSTRATION.md) | Offline walkthrough, clean setup and full nine-run reproduction |
