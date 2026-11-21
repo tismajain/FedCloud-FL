@@ -71,6 +71,13 @@ Upstream **reported**, not yet independently reproduced: original `results/summa
 - Verified all binary label combinations containing both classes and three discrete score levels for arrays of length 2 through 5 against direct metric definitions. CLI checks passed for an intact synthetic archive, an altered CSV metric, and a missing archive. Real prediction verification remains pending.
 - Confirmed the checkout is on the requested branch. GitHub fetch and push failed to connect over HTTPS, and the live remote SHA remains unverified. PyPI and the raw GitHub host were also unreachable. The isolated Windows environment contains only pip and cannot run pytest. The raw dataset and alpha 0.1 partition arrays are absent, so this checkpoint produced no socket measurements, regenerated study predictions, or dependency lock.
 
+## Clean environment retry
+
+- Created a fresh Windows Python 3.12.14 environment at `.venv-reproduction`, isolated from system packages. No other environment was modified. PyPI and its wheel host failed to connect on port 443. The install exited 1 with `No matching distribution found for pytest`.
+- `python -m pytest tests -q` exited 1 with `No module named pytest` before collection. `python -m unittest discover -s tests -v` exited 1 with two failed module imports, both for missing NumPy. Zero actual test methods ran. Flower parity was never reached.
+- Narrowed the parity skip to a missing top-level `flwr` module. Transitive dependency failures now propagate as test errors. The isolated dependency lock and a full parity run require package access.
+- The cached remote ref now equals `f7016f8` at the start of this session. Live fetch still failed over HTTPS.
+
 ## Remaining tasks
 
 1. Verify private GitHub checkpoint push and record URL/commit in handoff.

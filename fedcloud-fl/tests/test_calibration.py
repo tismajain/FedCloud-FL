@@ -106,8 +106,10 @@ class CalibrationTests(unittest.TestCase):
     def test_aggregation_matches_flower(self):
         try:
             from flwr.server.strategy.aggregate import aggregate
-        except ImportError:
-            self.skipTest("Flower not installed")
+        except ModuleNotFoundError as exc:
+            if exc.name != "flwr":
+                raise
+            self.skipTest("Flower is absent; install the project requirements to verify parity")
         rng = np.random.default_rng(4)
         updates = [[rng.normal(size=(3, 4)).astype(np.float32), np.ones(4, dtype=np.float32)] for _ in range(5)]
         sizes = [3, 10, 5, 8, 2]
