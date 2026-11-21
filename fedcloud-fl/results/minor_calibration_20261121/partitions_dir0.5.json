@@ -1,0 +1,47 @@
+{
+  "clients": [
+    {
+      "client": 0,
+      "n": 5365,
+      "n_fraud": 28,
+      "fraud_rate_pct": 0.5219,
+      "hellinger": 0.02224,
+      "jsd": 0.000695
+    },
+    {
+      "client": 1,
+      "n": 89503,
+      "n_fraud": 21,
+      "fraud_rate_pct": 0.0235,
+      "hellinger": 0.01806,
+      "jsd": 0.000439
+    },
+    {
+      "client": 2,
+      "n": 49037,
+      "n_fraud": 80,
+      "fraud_rate_pct": 0.1631,
+      "hellinger": 0.00032,
+      "jsd": 0.0
+    },
+    {
+      "client": 3,
+      "n": 18713,
+      "n_fraud": 48,
+      "fraud_rate_pct": 0.2565,
+      "hellinger": 0.00694,
+      "jsd": 6.9e-05
+    },
+    {
+      "client": 4,
+      "n": 7617,
+      "n_fraud": 107,
+      "fraud_rate_pct": 1.4048,
+      "hellinger": 0.0551,
+      "jsd": 0.00405
+    }
+  ],
+  "mean_hellinger": 0.013516600816518343,
+  "mean_jsd": 0.00044151049431667987,
+  "frauds_cv": 0.5703138481048924
+}

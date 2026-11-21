@@ -1,0 +1,29 @@
+{
+  "validation_score_quantiles": {
+    "0": [
+      9.357623589846195e-14,
+      1.5601608538418077e-05,
+      7.139762601582333e-05,
+      0.0002775611210381612,
+      0.9543411135673523
+    ],
+    "1": [
+      2.179895819409694e-09,
+      0.7965008020401001,
+      0.998024970293045,
+      0.9999975562095642,
+      1.0
+    ]
+  },
+  "calibration": {
+    "threshold": 0.5551838278770447,
+    "validation_f1": 0.8620689655172414,
+    "validation_precision": 0.9375,
+    "validation_recall": 0.7978723404255319,
+    "validation_n": 56745,
+    "validation_frauds": 94,
+    "objective": "maximum validation F1; highest threshold breaks ties"
+  },
+  "calibration_seconds": 0.007671840001421515,
+  "total_run_seconds": 10.365211340002134
+}

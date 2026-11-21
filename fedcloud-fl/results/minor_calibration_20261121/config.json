@@ -1,0 +1,46 @@
+{
+  "csv": "/mnt/c/Users/Tisma Jain/cc/fedcloud-fl/data/creditcard.csv",
+  "output": "/mnt/c/Users/Tisma Jain/cc/fedcloud-fl/results/minor_calibration_20261121",
+  "rounds": 30,
+  "epochs": 1,
+  "lr": 0.001,
+  "pos_weight": 10.0,
+  "clients": 5,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "split_seed": 42,
+  "partition_seed": 42,
+  "schemes": [
+    "dir0.1",
+    "dir0.5"
+  ],
+  "include_fedprox": true,
+  "created_utc": "2026-11-21T11:17:54.088090+00:00",
+  "upstream_commit": "3ba5dd0c0950e665f2bf6ac88d57e4c0c547fe2e",
+  "file_sha256": {
+    "fedcloud/model.py": "2e0fc0078acb2239209a065d2548a9ca39b4d63684ef665fe589c40f4740d88c",
+    "fedcloud/data.py": "3f51145101453409b5d3fc4d219148d23f2eb95bde154e9b5c534d98d5aac14f",
+    "fedcloud/calibration.py": "d0b42142fa89cf301b89462721fab74a46ccc7f93c73d57ef23964dae5529dbd",
+    "fedcloud/study_data.py": "a6e99119989c5877174d3d44d81493c27af9e3fa99bd84463a2e7d6d457e17c9",
+    "scripts/run_threshold_study.py": "ae3e3a180591ecd343bb6d8303bbc0e5949cd61945ecfb3e52f5c9dac1a93a7f"
+  },
+  "python": "3.12.3",
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "packages": {
+    "numpy": "2.2.6",
+    "pandas": "2.3.3",
+    "scikit-learn": "1.7.2",
+    "scipy": "1.18.1",
+    "matplotlib": "3.10.7",
+    "flwr": "1.18.0",
+    "pytest": "9.2.0",
+    "threadpoolctl": "3.7.0"
+  },
+  "execution": "sequential in-process federated simulation; full participation; BLAS threads=1",
+  "communication": "Decimal MB; exact serialized tensor sizes, simulated transfers; excludes transport/control overhead",
+  "threshold_distribution": "Server-side threshold only; broadcasting one float64 to five clients would add 40 payload bytes",
+  "test_policy": "Fixed final checkpoint; test used only after validation threshold is frozen"
+}
