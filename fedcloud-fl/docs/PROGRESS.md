@@ -78,6 +78,12 @@ Upstream **reported**, not yet independently reproduced: original `results/summa
 - Narrowed the parity skip to a missing top-level `flwr` module. Transitive dependency failures now propagate as test errors. The isolated dependency lock and a full parity run require package access.
 - The cached remote ref now equals `f7016f8` at the start of this session. Live fetch still failed over HTTPS.
 
+## Report and demonstration checkpoint
+
+- Expanded the minor-project report with the literature, mathematical protocol, saved results, limitations, and upstream attribution. Added a guided offline demonstration, a full reproduction command with the recorded settings, and a diary tied to Git and saved experiment artifacts.
+- The published dataset mirror failed to connect, and neither `data/creditcard.csv` nor the alpha 0.1 partition arrays are present. No controlled-study rerun, regenerated ranking comparison, or networked baseline measurement was possible.
+- The clean-environment milestone was committed as `3122b9a`. Its push failed to connect to GitHub over HTTPS.
+
 ## Remaining tasks
 
 1. Verify private GitHub checkpoint push and record URL/commit in handoff.

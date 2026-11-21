@@ -23,7 +23,18 @@ Heterogeneity is reported as Hellinger distance and the fraud-count coefficient 
 Each run logs AUPRC, F1, ROC-AUC, recall, precision and accuracy, plus wall-clock time, bytes
 up and down per round, rounds-to-target, MB-to-target, async staleness and per-client participation.
 
-## Layout
+## Non-IID threshold study
+The minor project adds a paired study of validation-selected decision thresholds under non-IID label skew. The study runs five clients sequentially in one Python process and evaluates each final model at two thresholds on the same held-out scores. Under alpha 0.1, saved mean FedAvg F1 rose from 0.452 to 0.693, with average precision constant at 0.649.
+
+| Minor-project resource | Content |
+|---|---|
+| [Demonstration](docs/DEMONSTRATION.md) | Offline walkthrough, clean setup and full nine-run reproduction |
+| [Report](docs/MINOR_PROJECT_REPORT.md) | Methodology, literature, saved results and limitations |
+| [Experiment record](docs/EXPERIMENTS.md) | Study artifacts and upstream socket reproduction protocol |
+| [Progress](docs/PROGRESS.md) | Verification status and remaining work |
+| [Contributions](docs/CONTRIBUTIONS.md) | Attribution for upstream code and project additions |
+
+## Upstream layout
 ```
 fedcloud/            core library
   data.py            loading, scaling, IID/Dirichlet partitioning, heterogeneity metrics
